@@ -4,4 +4,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  namespace :api do
+    post '/subscriptions/receive', to: 'subscriptions#receive'
+  end
 end

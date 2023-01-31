@@ -3,17 +3,13 @@
 class NewsLetterSubscriber
   include BaseSubscriber
 
-  def call(topic)
-    sub = upsert_subscription(topic)
-    subscriber = sub.listen do |received_message|
-      puts "The received data is: #{received_message}"
-      received_message.acknowledge!
-    end
+  TOPIC = "users"
 
-    subscriber.on_error do |exception|
-      puts "We got an exception! #{exception.message}"
-    end
+  def call
+    upsert_subscription(TOPIC, self.class.name)
+  end
 
-    subscriber.start
+  def process(payload)
+    puts "The request is being received by News Letter subscriber! #{payload}"
   end
 end
